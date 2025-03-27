@@ -11,13 +11,14 @@ pip install flask tensorflow scikit-learn joblib
 ```
 
 ### Explicación del código:
-Cargar el modelo y los escaladores:
+- Cargar el modelo y los escaladores:
 
 Usamos tf.keras.models.load_model('model.keras') para cargar el modelo entrenado.
 
 Usamos joblib.load('scaler_x.joblib') y joblib.load('scaler_y.joblib') para cargar los escaladores para X y y respectivamente.
 
-Ruta /predict:
+
+- Ruta /predict:
 
 En esta ruta se espera una solicitud POST que contenga las características para hacer la predicción.
 
@@ -31,7 +32,8 @@ El valor predicho está en la escala logarítmica, por lo que deshacemos la tran
 
 Finalmente, devolvemos el precio predicho en formato JSON.
 
-Ruta /:
+
+- Ruta /:
 
 Esta es una ruta de bienvenida simple para verificar que la aplicación Flask está funcionando correctamente.
 
@@ -70,5 +72,5 @@ Abre tu navegador y visita http://127.0.0.1:5000/ para ver la respuesta de bienv
 
 Usa una herramienta como Postman o el código en Python proporcionado para enviar una solicitud POST a http://127.0.0.1:5000/predict con las características necesarias y obtener la predicción.
 
-![img](img\img_prediction.png)
-![img](img\evaluation.png)
+![img](img/img_prediction.png)
+![img](img/evaluation.png)
