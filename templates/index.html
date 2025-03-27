@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Precio de Piso</title>
+</head>
+<body>
+    <h2>Ingrese los datos del piso</h2>
+    <form id="prediction-form">
+        <label for="area">Área: (Ej:7000, 10000)</label>
+        <input type="number" step="any" id="area" name="area" placeholder="7420" required><br>
+        
+        <label for="bedrooms">Habitaciones:</label>
+        <input type="number" id="bedrooms" name="bedrooms" required><br>
+        
+        <label for="bathrooms">Baños:</label>
+        <input type="number" id="bathrooms" name="bathrooms" required><br>
+        
+        <label for="stories">Pisos/Plantas:</label>
+        <input type="number" id="stories" name="stories" required><br>
+        
+        <label>Piso en Calle Principal:</label>
+        <input type="radio" name="mainroad" value="1" required> Sí
+        <input type="radio" name="mainroad" value="0" required> No<br>
+        
+        <label>Habitación de Invitados/Huéspedes:</label>
+        <input type="radio" name="guestroom" value="1" required> Sí
+        <input type="radio" name="guestroom" value="0" required> No<br>
+        
+        <label>Sótano:</label>
+        <input type="radio" name="basement" value="1" required> Sí
+        <input type="radio" name="basement" value="0" required> No<br>
+        
+        <label>Calefacción y Agua Caliente:</label>
+        <input type="radio" name="hotwaterheating" value="1" required> Sí
+        <input type="radio" name="hotwaterheating" value="0" required> No<br>
+        
+        <label>Aire Acondicionado:</label>
+        <input type="radio" name="airconditioning" value="1" required> Sí
+        <input type="radio" name="airconditioning" value="0" required> No<br>
+        
+        <label for="parking">Plazas de Parking: (Ej: 1,2)</label>
+        <input type="number" id="parking" name="parking" placeholder="2" required><br>
+        
+        <label>Área Preferencial:</label>
+        <input type="radio" name="prefarea" value="1" required> Sí
+        <input type="radio" name="prefarea" value="0" required> No<br>
+        
+        <label for="furnishingstatus">Estado del Mobiliario:</label>
+        <select id="furnishingstatus" name="furnishingstatus" required>
+            <option value="furnished">Amueblado</option>
+            <option value="semi-furnished">Semi-Amueblado</option>
+            <option value="unfurnished">No Amueblado</option>
+        </select><br>
+        
+        <button type="button" onclick="predictPrice()">Predecir Precio</button>
+    </form>
+    
+    <h3>Precio Predicho: <span id="result"></span></h3>
+    
+    <script>
+        function predictPrice() {
+            var formData = new FormData(document.getElementById('prediction-form'));
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.predicted_price) {
+                    document.getElementById('result').innerText = data.predicted_price;
+                } else {
+                    document.getElementById('result').innerText = 'Error en la predicción';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
